@@ -24,8 +24,9 @@ func createApplicationContainer() *fyne.Container {
   
   labelContainer := container.New(layout.NewCenterLayout(), label)
 
-  inputWindow := InputContainer() 
-  applicationContainer := container.New(layout.NewVBoxLayout(), labelContainer, inputWindow)
+  inputContainer := InputContainer() 
+  scaleNotesOutputContainer := CreateOutputContainer()
+  applicationContainer := container.New(layout.NewVBoxLayout(), labelContainer, inputContainer, scaleNotesOutputContainer)
 
   return applicationContainer
 }

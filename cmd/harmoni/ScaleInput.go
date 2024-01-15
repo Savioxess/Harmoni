@@ -9,26 +9,26 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-var currentKeySetTo string = "C"
-var currentScale string = "Ionian"
+var CurrentKeySetTo string = "C"
+var CurrentScale string = "Ionian"
+var Notes []string = []string{"C", "C#", "D", "D#","E", "F", "F#", "G", "G#", "A", "A#", "B"}
+var Scales []string = []string{"Ionian", "Dorian", "Phrygian", "Lydian", "Mixolydian", "Aeolian", "Locrian"}
 
 func createKeyInput() *widget.Select {
-  var notes []string = []string{"C", "C#", "D", "D#","E", "F", "F#", "G", "G#", "A", "A#", "B"}
-
-  scaleKeyInput := widget.NewSelect(notes, func(value string) {
-    currentKeySetTo = value
+  scaleKeyInput := widget.NewSelect(Notes, func(value string) {
+    CurrentKeySetTo = value
     fmt.Println("Current Key: ", value)
+    RefreshValues()
   })
 
   return scaleKeyInput
 }
 
 func createScaleInput() *widget.Select {
-  var scales []string = []string{"Ionian", "Dorian", "Phrygian", "Lydian", "Mixolydian", "Aeolian", "Locrian"}
-
-  scaleInput := widget.NewSelect(scales, func(value string) {
-    currentScale = value
+  scaleInput := widget.NewSelect(Scales, func(value string) {
+    CurrentScale = value
     fmt.Println("Current Scale: ", value)
+    RefreshValues()
   })
 
   return scaleInput
