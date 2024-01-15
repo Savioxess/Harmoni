@@ -11,6 +11,7 @@ import (
 )
 
 var outputDisplay [8]*fyne.Container
+var scale [8]string
 
 func CreateOutputContainer() *fyne.Container {
   createOutputDisplay()
@@ -42,7 +43,6 @@ func RefreshValues() {
 }
 
 func getNotesInScale() [8]string {
-  var scale [8]string
   var stepsInIonian [7]int = [...]int{2, 2, 1, 2, 2, 2, 1}
   indexOfCurrentScale := getIndexOfCurrentScale()
   indexOfRootNote := getIndexOfRootNode()

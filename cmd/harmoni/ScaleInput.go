@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
@@ -19,6 +18,7 @@ func createKeyInput() *widget.Select {
     CurrentKeySetTo = value
     fmt.Println("Current Key: ", value)
     RefreshValues()
+    RefreshChords()
   })
 
   return scaleKeyInput
@@ -29,6 +29,7 @@ func createScaleInput() *widget.Select {
     CurrentScale = value
     fmt.Println("Current Scale: ", value)
     RefreshValues()
+    RefreshChords()
   })
 
   return scaleInput

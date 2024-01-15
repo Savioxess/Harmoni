@@ -25,7 +25,13 @@ func createApplicationContainer() *fyne.Container {
 
   inputContainer := InputContainer() 
   scaleNotesOutputContainer := CreateOutputContainer()
-  applicationContainer := container.New(layout.NewVBoxLayout(), labelContainer, layout.NewSpacer(), inputContainer, scaleNotesOutputContainer, layout.NewSpacer())
+  chordsContainer := CreateChordDisplay()
+  scaleLabel := widget.NewRichTextFromMarkdown("# Notes In Scale")
+  scaleContainer := container.NewCenter(scaleLabel)
+  chordLabel := widget.NewRichTextFromMarkdown("# Diatonic Chords In Scale")
+  chordContainer := container.NewCenter(chordLabel)
+
+  applicationContainer := container.New(layout.NewVBoxLayout(), labelContainer, layout.NewSpacer(), inputContainer, scaleContainer, scaleNotesOutputContainer, layout.NewSpacer(), chordContainer, chordsContainer, layout.NewSpacer(), layout.NewSpacer())
 
   return applicationContainer
 }
