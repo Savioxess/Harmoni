@@ -35,7 +35,9 @@ func createScaleInput() *widget.Select {
 }
 
 func InputContainer() *fyne.Container {
-  inputHBox := container.New(layout.NewHBoxLayout(), layout.NewSpacer(), createKeyInput(), layout.NewSpacer(), createScaleInput(), layout.NewSpacer())
+  keyInput := createKeyInput()
+  scaleInput := createScaleInput()
+  inputHBox := container.New(layout.NewHBoxLayout(),layout.NewSpacer(), widget.NewLabel("Key"), keyInput, layout.NewSpacer(), widget.NewLabel("Scale"), scaleInput, layout.NewSpacer())
 
   return inputHBox
 }

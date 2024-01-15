@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -9,28 +10,35 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-var outputDisplay *widget.Label
+var outputDisplay [8]*fyne.Container
 
 func CreateOutputContainer() *fyne.Container {
   createOutputDisplay()
-  outputContainer := container.New(layout.NewCenterLayout(), outputDisplay)
+  notesContainer := container.NewHBox(outputDisplay[0], outputDisplay[1], outputDisplay[2], outputDisplay[3], outputDisplay[4], outputDisplay[5], outputDisplay[6], outputDisplay[7])
 
-  return outputContainer
+  notesContainerCentered := container.New(layout.NewCenterLayout(), notesContainer)
+
+
+  return notesContainerCentered
 }
 
 func createOutputDisplay() {
   notesInScale := getNotesInScale()      
-  outputText := fmt.Sprintf("%s %s %s %s %s %s %s %s", notesInScale[0], notesInScale[1], notesInScale[2], notesInScale[3], notesInScale[4], notesInScale[5], notesInScale[6], notesInScale[7]) 
 
-  outputDisplay = widget.NewLabel(outputText)
+  for i, note := range notesInScale {
+    outputDisplay[i] = container.NewVBox(widget.NewRichTextFromMarkdown(fmt.Sprintf("## %s", note)), widget.NewLabel(fmt.Sprintf("%d", i+1)))
+  }
 }
 
 func RefreshValues() {
   notesInScale := getNotesInScale()      
-  outputText := fmt.Sprintf("%s %s %s %s %s %s %s %s", notesInScale[0], notesInScale[1], notesInScale[2], notesInScale[3], notesInScale[4], notesInScale[5], notesInScale[6], notesInScale[7]) 
 
-  outputDisplay.SetText(outputText)
-  outputDisplay.Refresh()
+  for i, note := range notesInScale {
+    outputDisplay[i].RemoveAll()
+    outputDisplay[i].Add(widget.NewRichTextFromMarkdown(fmt.Sprintf("# %s", note)))
+    outputDisplay[i].Add(widget.NewLabel(fmt.Sprintf("%d", i+1)))
+    outputDisplay[i].Refresh()
+  }
 }
 
 func getNotesInScale() [8]string {
@@ -41,7 +49,11 @@ func getNotesInScale() [8]string {
   currentNoteIndex := indexOfRootNote
 
   for i := 0; i < 8; i++ {
-    scale[i] = Notes[currentNoteIndex]
+    if i-1 != -1 {
+      scale[i] = flatOrSharp(scale[i-1], currentNoteIndex)
+    } else {
+      scale[i] = Notes[currentNoteIndex]
+    }
     currentNoteIndex = getNextNodeIndex(currentNoteIndex + stepsInIonian[getStepIndex(i + indexOfCurrentScale)])
   }
 
@@ -82,4 +94,15 @@ func getIndexOfRootNode() int {
   }
 
   return 0
+}
+
+func flatOrSharp(previous string, currentNoteIndex int) string {
+  noteHalfStepDown := strings.Trim(Notes[currentNoteIndex], "#")
+  previousNoteTrim := strings.ReplaceAll(strings.ReplaceAll(previous, "#", ""), "b", "")
+
+  if noteHalfStepDown == previousNoteTrim {
+    return Notes[currentNoteIndex+1] + "b" 
+  }
+
+  return Notes[currentNoteIndex]
 }

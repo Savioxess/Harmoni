@@ -19,14 +19,13 @@ func main() {
 }
 
 func createApplicationContainer() *fyne.Container {
-  label := widget.NewLabel("Find Diatonic Chords In Any Mode")
-  label.TextStyle.Bold = true
+  label := widget.NewRichTextFromMarkdown("# Chords Finder")
   
-  labelContainer := container.New(layout.NewCenterLayout(), label)
+  labelContainer := container.NewCenter(label)
 
   inputContainer := InputContainer() 
   scaleNotesOutputContainer := CreateOutputContainer()
-  applicationContainer := container.New(layout.NewVBoxLayout(), labelContainer, inputContainer, scaleNotesOutputContainer)
+  applicationContainer := container.New(layout.NewVBoxLayout(), labelContainer, layout.NewSpacer(), inputContainer, scaleNotesOutputContainer, layout.NewSpacer())
 
   return applicationContainer
 }
