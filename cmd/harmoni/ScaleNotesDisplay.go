@@ -97,11 +97,11 @@ func getIndexOfRootNode() int {
 }
 
 func flatOrSharp(previous string, currentNoteIndex int) string {
-  noteHalfStepDown := strings.Trim(Notes[currentNoteIndex], "#")
+  noteHalfStepDown := strings.Trim(Notes[getNextNodeIndex(currentNoteIndex)], "#")
   previousNoteTrim := strings.ReplaceAll(strings.ReplaceAll(previous, "#", ""), "b", "")
 
   if noteHalfStepDown == previousNoteTrim {
-    return Notes[currentNoteIndex+1] + "b" 
+    return Notes[getNextNodeIndex(currentNoteIndex+1)] + "b" 
   }
 
   return Notes[currentNoteIndex]
