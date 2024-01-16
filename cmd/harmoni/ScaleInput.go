@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
@@ -16,7 +15,6 @@ var Scales []string = []string{"Ionian", "Dorian", "Phrygian", "Lydian", "Mixoly
 func createKeyInput() *widget.Select {
   scaleKeyInput := widget.NewSelect(Notes, func(value string) {
     CurrentKeySetTo = value
-    fmt.Println("Current Key: ", value)
     RefreshValues()
     RefreshChords()
   })
@@ -27,7 +25,6 @@ func createKeyInput() *widget.Select {
 func createScaleInput() *widget.Select {
   scaleInput := widget.NewSelect(Scales, func(value string) {
     CurrentScale = value
-    fmt.Println("Current Scale: ", value)
     RefreshValues()
     RefreshChords()
   })
